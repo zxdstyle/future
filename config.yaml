@@ -1,0 +1,15 @@
+host: 0.0.0.0
+port: 80
+name: hades
+log:
+  level: info
+  stats: true
+pprof:
+  enable: false
+  prefix:
+databases:
+  default:
+    driver: "mysql"
+    dsn: "root:loveclub123@tcp(mysql.rd-development.svc.cluster.local:3306)/hades?charset=utf8mb4&parseTime=True&loc=Local"
+services:
+  icarus: "http://icarus.development"

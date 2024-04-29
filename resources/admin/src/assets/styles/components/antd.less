@@ -1,0 +1,61 @@
+.ant-menu-item-selected::after {
+    @apply rounded-lg;
+}
+
+.ant-drawer-right.ant-drawer-open.no-mask {
+    right: 0;
+}
+
+.ant-btn {
+    @apply inline-flex items-center justify-center gap-1;
+}
+
+//.ant-drawer {
+//    .ant-drawer-close {
+//        @apply bg-white p-1 rounded w-8 h-10 flex items-center justify-center absolute top-10 m-0;
+//    }
+//
+//    &.ant-drawer-left .ant-drawer-close {
+//        @apply -right-5;
+//    }
+//    &.ant-drawer-right .ant-drawer-close {
+//        @apply -left-5;
+//    }
+//}
+
+.line {
+    @apply relative left-0 right-0 top-0 bottom-0;
+
+    &:before {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        overflow: hidden;
+        background: #d6efe8;
+    }
+}
+
+.ant-table {
+    th {
+        @apply select-none;
+    }
+}
+.ant-card {
+    @apply shadow-normal;
+
+    .ant-card-body {
+        @apply p-0 flex-shrink-0 flex-grow !important;
+        height: calc(100% - 56px);
+    }
+}
+
+.ant-menu-item {
+    @apply flex items-center !important;
+}
+
+.ant-layout-sider-trigger {
+    position: static !important;
+}
