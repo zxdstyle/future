@@ -27,7 +27,7 @@ export default function QuickJumper() {
 
     return (
         <Input
-            className="border-dashed border-gray-700 transition-all duration-500"
+            className="border-dashed border-gray-800 transition-all duration-500"
             size="large"
             value={dir}
             style={{ width }}

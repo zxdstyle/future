@@ -48,16 +48,15 @@ export default function Sider({ fixed, meta, Title: TitleFromProps }: RefineThem
                 collapsedWidth={80}
                 breakpoint="lg"
                 theme={mode}
-                trigger={(
-                    <Button
-                        shape="circle"
-                        className="absolute top-6 -right-4 shadow border-none"
-                        icon={siderCollapsed ? <IconAntDesignRightOutlined /> : <IconAntDesignLeftOutlined />}
-                        onClick={() => {}}
-                    >
-                    </Button>
-                )}
+                trigger={null}
             >
+                <Button
+                    shape="circle"
+                    className="absolute top-6 -right-4 shadow border-none"
+                    icon={siderCollapsed ? <IconAntDesignRightOutlined /> : <IconAntDesignLeftOutlined />}
+                    onClick={() => setSiderCollapsed(!siderCollapsed)}
+                >
+                </Button>
                 <div
                     style={{
                         width: siderCollapsed ? "80px" : "200px",

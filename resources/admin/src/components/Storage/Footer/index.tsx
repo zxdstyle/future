@@ -20,7 +20,7 @@ export default function Footer() {
     }
 
     return (
-        <footer className="h-12 w-full border-t border-gray-700 border-solid flex items-center justify-between px-5">
+        <footer className="h-12 w-full border-t border-gray-800 border-solid flex items-center justify-between px-5">
             <Breadcrumb items={items} itemRender={itemRender} />
         </footer>
     )

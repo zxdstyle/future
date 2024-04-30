@@ -8,7 +8,6 @@ interface MenuProps {
 export default function Menu({ meta }: MenuProps) {
     const { menuItems, selectedKey, defaultOpenKeys } = useMenu({ meta })
     const { setMobileSiderOpen } = useThemedLayoutContext()
-    console.log(menuItems)
 
     const items = menuItems.map(item => ({
         key: item.key,
