@@ -12,10 +12,6 @@ const routes: RouteDefinition[] = [
             },
         ],
     },
-    {
-        component: lazy(() => import('@/layouts/admin')),
-        children: [{ path: '/dashboard', component: lazy(() => import('@/views/admin/dashboard')) }],
-    },
 ];
 
 export default routes;

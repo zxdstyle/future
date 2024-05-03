@@ -15,7 +15,7 @@
     "@solid-primitives/mouse": "^2.0.19",
     "@solid-primitives/resize-observer": "^2.0.25",
     "@solid-primitives/scroll": "^2.0.23",
-    "@solidjs/router": "^0.13.2",
+    "@solidjs/router": "^0.13.3",
     "@tanstack/solid-query": "^5.32.0",
     "autoprefixer": "^10.4.19",
     "clsx": "^2.1.0",

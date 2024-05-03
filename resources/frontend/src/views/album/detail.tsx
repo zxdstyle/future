@@ -1,9 +1,6 @@
 import NavLine from '@/components/NavLine';
-import RouterAnimation from '@/components/RouterAnimation';
 import { CursorContext } from '@/layouts/context/cursor';
-import { For, useContext } from 'solid-js';
-import Masonry from './components/Masonry';
-import SmoothScroll from '@/components/SmoothScroll';
+import { useContext } from 'solid-js';
 import Carousel from '@/views/album/components/Carousel';
 
 export default function Detail() {

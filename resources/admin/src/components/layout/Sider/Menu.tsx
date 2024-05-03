@@ -1,3 +1,4 @@
+import type { MenuProps as AntMenuProps } from "antd"
 import { Menu as AntMenu } from "antd"
 import { useMenu } from "@refinedev/core"
 import { useThemedLayoutContext } from "@refinedev/antd"
@@ -8,9 +9,8 @@ interface MenuProps {
 export default function Menu({ meta }: MenuProps) {
     const { menuItems, selectedKey, defaultOpenKeys } = useMenu({ meta })
     const { setMobileSiderOpen } = useThemedLayoutContext()
-    console.log(menuItems)
 
-    const items = menuItems.map(item => ({
+    const items: AntMenuProps["items"] = menuItems.map(item => ({
         key: item.key,
         icon: meta?.icon ?? <IconAntDesignUnorderedListOutlined />,
         label: meta?.label ?? item.label,
