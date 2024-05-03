@@ -12,7 +12,6 @@ export default function useDataSource() {
     })
 
     const pages = data ? data.pages.map(page => page.data) : []
-    // @ts-expect-error
     const allPages: FileDescription[] = data ? [].concat(...pages) : []
 
     return { data: allPages }

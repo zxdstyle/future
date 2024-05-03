@@ -31,7 +31,7 @@ export default function GridItem({ item }: IGridItemProps) {
                     <FileThumbnail width={80} item={item} />
                 </div>
 
-                <div className="text-sm break-words whitespace-normal line-clamp-2">{item.filename}</div>
+                <div className="text-sm break-words whitespace-normal line-clamp-2 text-white">{item.filename}</div>
                 <div className="text-[10px] text-primary/60">{humanReadableFilesize(item.size)}</div>
 
             </li>

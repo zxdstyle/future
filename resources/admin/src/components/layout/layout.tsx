@@ -3,11 +3,10 @@ import { ThemedLayoutContextProvider } from "@refinedev/antd"
 import { Layout as AntdLayout } from "antd"
 import type { RefineThemedLayoutV2Props } from "@refinedev/antd"
 import { Outlet } from "react-router-dom"
-import DefaultSider from "./Sider"
+import DefaultSider from "./Sider/index.tsx"
 
 export const ThemedLayoutV2: React.FC<RefineThemedLayoutV2Props> = ({
     Sider,
-    Title,
     Footer,
     OffLayoutArea,
     initialSiderCollapsed,

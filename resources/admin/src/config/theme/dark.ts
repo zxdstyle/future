@@ -28,6 +28,7 @@ const customTheme: ThemeConfig = {
         },
         Layout: {
             bodyBg: colors.base,
+            siderBg: colors.overlay,
         },
         Form: {
             labelFontSize: 16,
