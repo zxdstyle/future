@@ -2,7 +2,7 @@ import type { ThemeConfig } from "antd"
 import { theme } from "antd"
 
 const colors = {
-    base: "#1C1D26",
+    bg: "#1C1D26",
     overlay: "#16161d",
     text: "#ABACBA",
     primary: "#0088ff",
@@ -15,19 +15,19 @@ const customTheme: ThemeConfig = {
         fontSize: 14,
         colorPrimary: colors.primary,
         colorTextBase: colors.text,
-        colorBgBase: colors.base,
+        colorBgBase: colors.bg,
         colorBgElevated: colors.overlay,
     },
     components: {
         Drawer: {
-            colorPrimary: colors.base,
+            colorPrimary: colors.bg,
         },
         Menu: {
             fontSize: 14,
             itemBg: "transparent",
         },
         Layout: {
-            bodyBg: colors.base,
+            bodyBg: colors.bg,
             siderBg: colors.overlay,
         },
         Form: {

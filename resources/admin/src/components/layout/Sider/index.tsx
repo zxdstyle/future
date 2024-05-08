@@ -32,7 +32,7 @@ export default function Sider({ fixed, meta, Title: TitleFromProps }: RefineThem
             {fixed && (
                 <div
                     style={{
-                        width: siderCollapsed ? "80px" : "200px",
+                        width: siderCollapsed ? "80px" : "220px",
                         transition: "all 0.2s",
                     }}
                 />
@@ -55,25 +55,34 @@ export default function Sider({ fixed, meta, Title: TitleFromProps }: RefineThem
                     className="absolute top-6 -right-4 shadow border-none"
                     icon={siderCollapsed ? <IconAntDesignRightOutlined /> : <IconAntDesignLeftOutlined />}
                     onClick={() => setSiderCollapsed(!siderCollapsed)}
-                >
-                </Button>
-                <div
-                    style={{
-                        width: siderCollapsed ? "80px" : "200px",
-                        padding: siderCollapsed ? "0" : "0 16px",
-                        display: "flex",
-                        justifyContent: siderCollapsed ? "center" : "flex-start",
-                        alignItems: "center",
-                        height: "64px",
-                        backgroundColor: token.colorBgElevated,
-                        fontSize: "14px",
-                        transition: "all 0.2s",
-                    }}
-                >
-                    <RenderToTitle collapsed={siderCollapsed} />
-                </div>
+                />
+                <div className="flex flex-col items-center justify-between h-full w-full">
+                    <div
+                        style={{
+                            width: siderCollapsed ? "80px" : "200px",
+                            padding: siderCollapsed ? "0" : "0 16px",
+                            display: "flex",
+                            justifyContent: siderCollapsed ? "center" : "flex-start",
+                            alignItems: "center",
+                            height: "64px",
+                            backgroundColor: token.colorBgElevated,
+                            fontSize: "14px",
+                            transition: "all 0.2s",
+                        }}
+                    >
+                        <RenderToTitle collapsed={siderCollapsed} />
+                    </div>
 
-                <Menu meta={meta} />
+                    <Menu meta={meta} />
+
+                    <div className="w-full text-left px-2">
+                        <div className="flex justify-between items-center w-full">
+                            <Button type="text" icon={<IconTablerSettings className="text-lg" />} />
+                            <Button type="text" icon={<IconTablerClipboardList className="text-lg" />} />
+                        </div>
+                        <small>v0.2.13-beta</small>
+                    </div>
+                </div>
             </Layout.Sider>
         </>
 

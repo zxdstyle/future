@@ -1,12 +1,23 @@
+import { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
+import CreateAlbum from "./create"
+import { NavbarContext } from "@/components/layout"
 import Album from "@/assets/images/album.png"
 
 export function Component() {
+    const { setLeftTools } = useContext(NavbarContext)
+    useEffect(() => {
+        setLeftTools(["navigator"])
+    }, [])
+
     const items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
     return (
         <div className="h-full p-12">
             <div className="h-full flex flex-wrap gap-10 justify-start content-start">
+
+                <CreateAlbum />
+
                 {items.map(item => (
                     <div className="relative text-center h-40 w-32 cursor-pointer group" key={item}>
                         <img className="absolute top-0 left-0 right-0 bottom-0 w-full h-full" src={Album} alt="" />

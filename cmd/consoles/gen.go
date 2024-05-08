@@ -4,7 +4,6 @@ import (
 	"future-admin/pkg"
 	"github.com/spf13/cobra"
 	"gorm.io/gen"
-	"gorm.io/gen/field"
 	"gorm.io/gorm"
 )
 
@@ -31,22 +30,7 @@ var (
 			g.WithImportPkgPath("github.com/golang-module/carbon/v2")
 
 			var (
-				activity = g.GenerateModel(
-					"activities",
-					gen.FieldType("rank_option", "*RankOption"),
-					gen.FieldGORMTag("rank_option", func(tag field.GormTag) field.GormTag {
-						return tag.Set("serializer", "json")
-					}),
-					gen.FieldType("reward_option", "[]RewardOption"),
-					gen.FieldGORMTag("reward_option", func(tag field.GormTag) field.GormTag {
-						return tag.Set("serializer", "json")
-					}),
-					gen.FieldType("locales", "[]Locale"),
-					gen.FieldType("status", "enums.ActivityStatus"),
-					gen.FieldGORMTag("locales", func(tag field.GormTag) field.GormTag {
-						return tag.Set("serializer", "json")
-					}),
-				)
+				activity = g.GenerateModel("albums")
 			)
 
 			g.ApplyBasic(activity)

@@ -40,6 +40,7 @@ export const ThemedHeaderV2: React.FC<RefineThemedLayoutV2HeaderProps> = ({ stic
         <AntdLayout.Header style={headerStyles}>
             <div className="flex flex-col justify-end h-full">
                 <Breadcrumb breadcrumbProps={{ style: { fontSize: 12 } }} showHome />
+
                 <Typography.Title level={3}>
                     {getUserFriendlyName(resource?.meta?.label ?? identifier, "plural")}
                 </Typography.Title>
