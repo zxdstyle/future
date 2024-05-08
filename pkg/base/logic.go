@@ -20,3 +20,16 @@ func (l *Logic[M]) Show(ctx context.Context, id uint64) (*M, error) {
 	)
 	return &m, err
 }
+
+func (l *Logic[M]) Create(ctx context.Context, m *M) error {
+	return l.db.WithContext(ctx).Create(m).Error
+}
+
+func (l *Logic[M]) Update(ctx context.Context, id uint64, m *M) error {
+	return l.db.WithContext(ctx).Where("id = ?", id).Updates(&m).Error
+}
+
+func (l *Logic[M]) Destroy(ctx context.Context, id uint64) error {
+	var m M
+	return l.db.WithContext(ctx).Where("id = ?", id).Delete(&m).Error
+}

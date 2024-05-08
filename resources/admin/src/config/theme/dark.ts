@@ -33,6 +33,9 @@ const customTheme: ThemeConfig = {
         Form: {
             labelFontSize: 16,
         },
+        Button: {
+            defaultColor: "#fff",
+        },
     },
 }
 

@@ -48,6 +48,10 @@ func Failed(code int, message string) Response {
 	}
 }
 
+func Internal(message string) Response {
+	return Failed(fiber.StatusInternalServerError, message)
+}
+
 func Success(data interface{}) Response {
 	return &response{
 		Code:    0,
