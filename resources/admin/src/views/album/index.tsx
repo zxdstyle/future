@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
+import { useList } from "@refinedev/core"
 import CreateAlbum from "./create"
 import { NavbarContext } from "@/components/layout"
 import Album from "@/assets/images/album.png"
@@ -12,6 +13,10 @@ export function Component() {
 
     const items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
+    const { data } = useList({
+        resource: "albums",
+    })
+    console.log(data)
     return (
         <div className="h-full p-12">
             <div className="h-full flex flex-wrap gap-10 justify-start content-start">

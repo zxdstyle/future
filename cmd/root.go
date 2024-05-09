@@ -10,7 +10,7 @@ import (
 var rootCmd = &cobra.Command{}
 
 func Execute() {
-	rootCmd.AddCommand(consoles.WebServerCmd(), consoles.GenCmd)
+	rootCmd.AddCommand(consoles.WebServerCmd(), consoles.GenCmd, consoles.MigrateCmd)
 
 	carbon.SetDefault(carbon.Default{
 		Layout:   carbon.DateTimeMilliLayout,

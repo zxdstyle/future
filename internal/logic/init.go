@@ -8,3 +8,7 @@ import (
 func init() {
 	do.Provide(nil, album.New)
 }
+
+func Invoke[M any]() M {
+	return do.MustInvoke[M](nil)
+}

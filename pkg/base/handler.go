@@ -16,6 +16,10 @@ func NewHandler[M any](logic *Logic[M]) *Handler[M] {
 	}
 }
 
+func (h *Handler[M]) List(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {
+	return h.logic.List(ctx, req)
+}
+
 func (h *Handler[M]) Create(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {
 	var m M
 
