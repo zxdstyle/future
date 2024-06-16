@@ -8,6 +8,13 @@ import { createMousePosition } from '@solid-primitives/mouse';
 import { spring } from 'motion';
 import styles from '../styles/cursor.module.css';
 
+import Img1 from '@/assets/images/baby/IMG_0047-2.jpg.webp';
+import Img2 from '@/assets/images/baby/IMG_0061-3.jpg.webp';
+import Img3 from '@/assets/images/baby/IMG_0058-2.jpg.webp';
+import Img4 from '@/assets/images/baby/IMG_0064-3.jpg.webp';
+import Img5 from '@/assets/images/baby/IMG_0066-2.jpg.webp';
+import Img6 from '@/assets/images/baby/IMG_0073-2.jpg.webp';
+
 export default function CursorToggleContext(props: { children: JSX.Element }) {
     const [cursorState, setCursorState] = createSignal<CursorState>('inactive');
 
@@ -21,12 +28,7 @@ export default function CursorToggleContext(props: { children: JSX.Element }) {
 
     const pos = createMousePosition();
 
-    const images = [
-        'https://images.pexels.com/photos/6954544/pexels-photo-6954544.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/6954509/pexels-photo-6954509.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/11153461/pexels-photo-11153461.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/5049271/pexels-photo-5049271.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    ];
+    const images = [Img1, Img2, Img3, Img4, Img5, Img6];
 
     return (
         <CursorProvider value={{ cursorState, setActive, setInactive }}>

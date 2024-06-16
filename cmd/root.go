@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"future-admin/cmd/consoles"
+	_ "future-admin/drivers"
 	"github.com/golang-module/carbon/v2"
 	"github.com/spf13/cobra"
 	"log"

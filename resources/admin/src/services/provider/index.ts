@@ -22,25 +22,19 @@ export function dataProvider(
 
             const queryFilters = generateFilter(filters)
 
-            const query: {
-                per_page?: number
-                page?: number
-                order_by?: string
-                order?: string
-                with?: string
-            } = {}
+            const query: Record<string, any> = {}
 
             if (mode === "server") {
                 query.per_page = pageSize
                 query.page = current
             }
 
-            const generatedSort = generateSort(sorters)
-            if (generatedSort) {
-                const { _sort, _order } = generatedSort
-                query.order_by = _sort.join(",")
-                query.order = _order.join(",")
+            if (sorters) {
+                sorters.forEach((item) => {
+                    query[`sort.${item.field}`] = item.order
+                })
             }
+
             if (relations)
                 query.with = relations.join(",")
 
@@ -119,7 +113,7 @@ export function dataProvider(
             const { headers, method } = meta ?? {}
             const requestMethod = (method as MethodTypesWithBody) ?? "delete"
 
-            const { data } = await httpClient[requestMethod](url, { data: variables, headers })
+            const { data } = await httpClient[requestMethod](url, { headers, data: variables ?? {} })
 
             return {
                 data,

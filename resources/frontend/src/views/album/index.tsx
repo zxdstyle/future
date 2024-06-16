@@ -3,23 +3,15 @@ import { CursorContext } from '@/layouts/context/cursor';
 import RouterAnimation from '@/components/RouterAnimation';
 import { A } from '@solidjs/router';
 import NavLine from '@/components/NavLine';
+import Cover from '@/assets/images/baby/IMG_0073-2.jpg.webp';
 
 export default function Album() {
-    const images = [
-        'https://images.pexels.com/photos/6954544/pexels-photo-6954544.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/6954509/pexels-photo-6954509.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/11153461/pexels-photo-11153461.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/5049271/pexels-photo-5049271.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/19057526/pexels-photo-19057526.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/19057526/pexels-photo-19057526.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/19057526/pexels-photo-19057526.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        'https://images.pexels.com/photos/19057526/pexels-photo-19057526.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    ];
+    const images = [Cover];
     const { setActive, setInactive } = useContext(CursorContext);
 
     return (
         <div class="w-full h-full flex bg-black/90 z-top">
-            <NavLine title="焦糖拿铁" subTitle={'Caramel latte'} class="left-36" position="center" />
+            <NavLine title="百日照" subTitle={'Caramel latte'} class="left-36" position="center" />
             <section class="px-44 py-32 w-full h-full overflow-auto">
                 <RouterAnimation
                     initial={{ opacity: 0, y: 100 }}
@@ -40,8 +32,8 @@ export default function Album() {
                                                 alt=""
                                             />
                                         </div>
-                                        <small class="font-bold text-white/50 uppercase">Milk Company</small>
-                                        <h5 class="text-2xl text-white font-bold uppercase">牛奶公司</h5>
+                                        <small class="font-bold text-white/50 uppercase">Hundred Days</small>
+                                        <h5 class="text-2xl text-white font-bold uppercase">百日照</h5>
                                     </A>
                                 </li>
                             )}

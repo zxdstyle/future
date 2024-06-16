@@ -95,7 +95,7 @@ export default function Slider(_props: Props) {
                                         exit={exit()}
                                         transition={{ duration: props.duration / 1000 }}
                                     >
-                                        <img class="w-full h-full" src={item} alt="" />
+                                        <img class="w-screen" src={item} alt="" />
                                     </Motion.li>
                                 </Show>
                             </Presence>

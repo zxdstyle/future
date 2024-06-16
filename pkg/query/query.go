@@ -45,6 +45,8 @@ func (q *Query) ParseFromReq(req *requests.RequestAble) (*Query, error) {
 					builders = append(builders, newWhere(s, opt.Cast(value)))
 				}
 			}
+		case sortSlug:
+			builders = append(builders, newSort(s[1], value))
 		case pageSlug:
 		case pageSizeSlug:
 		}

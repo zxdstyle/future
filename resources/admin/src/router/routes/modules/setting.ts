@@ -7,6 +7,7 @@ const settingRoutes: RouteObject[] = [
         children: [
             { path: "general", lazy: () => import("@/views/settings/general") },
             { path: "account", lazy: () => import("@/views/settings/account") },
+            { path: "storage", lazy: () => import("@/views/settings/storage") },
         ],
     },
 ]

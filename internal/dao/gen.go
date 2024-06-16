@@ -16,34 +16,39 @@ import (
 )
 
 var (
-	Q     = new(Query)
-	Album *album
+	Q       = new(Query)
+	Album   *album
+	Storage *storage
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Album = &Q.Album
+	Storage = &Q.Storage
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:    db,
-		Album: newAlbum(db, opts...),
+		db:      db,
+		Album:   newAlbum(db, opts...),
+		Storage: newStorage(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Album album
+	Album   album
+	Storage storage
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:    db,
-		Album: q.Album.clone(db),
+		db:      db,
+		Album:   q.Album.clone(db),
+		Storage: q.Storage.clone(db),
 	}
 }
 
@@ -57,18 +62,21 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:    db,
-		Album: q.Album.replaceDB(db),
+		db:      db,
+		Album:   q.Album.replaceDB(db),
+		Storage: q.Storage.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Album IAlbumDo
+	Album   IAlbumDo
+	Storage IStorageDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Album: q.Album.WithContext(ctx),
+		Album:   q.Album.WithContext(ctx),
+		Storage: q.Storage.WithContext(ctx),
 	}
 }
 

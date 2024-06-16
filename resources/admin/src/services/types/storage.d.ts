@@ -1,22 +1,17 @@
-interface FileDescription {
+interface Storage {
     id: number
-    is_dir: boolean
-    path: string
-    filename: string
-    mode: string
-    size: number
+    name: string
+    driver: string
+    thumbnail: number
+    option: Option
     created_at: string
-    accessed_at: string
     updated_at: string
-
-    exif?: ExifItem[]
 }
 
-interface ExifItem {
-    key: string
-    label: string
-    value: string
-    enums: Enums
+interface Option {
+    local?: Local
 }
 
-type Enums = Record<string, string>
+interface Local {
+    folder: string
+}

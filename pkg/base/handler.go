@@ -42,5 +42,12 @@ func (h *Handler[M]) Show(ctx context.Context, req *requests.RequestAble) (respo
 }
 
 func (h *Handler[M]) Destroy(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {
-	return nil, nil
+	id, err := req.ParamsInt("id")
+	if err != nil {
+		return nil, err
+	}
+	if err := h.logic.Destroy(ctx, uint64(id)); err != nil {
+		return nil, err
+	}
+	return responses.Empty(), nil
 }

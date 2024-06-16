@@ -7,6 +7,7 @@ import { NavbarContext } from "@/components/layout/Navbar/context.tsx"
 const theme: ThemeConfig = {
     components: {
         Menu: {
+            itemHeight: 32,
             itemSelectedBg: "rgba(171, 172, 186, 0.12)",
             itemSelectedColor: "#fff",
         },
@@ -24,6 +25,7 @@ export function Component() {
                 { key: "/settings/general", label: "通用", icon: <IconTablerSettings /> },
                 { key: "/settings/account", label: "账户", icon: <IconPhUserBold /> },
                 { key: "/settings/appearance", label: "外观", icon: <IconPhPaintBrushBold /> },
+                { key: "/settings/storage", label: "存储", icon: <IconPhFloppyDisk /> },
             ],
         },
         {
@@ -47,7 +49,7 @@ export function Component() {
     }, [])
     return (
         <div className="flex w-full h-full">
-            <nav className="w-64 h-full pl-3">
+            <nav className="w-52 h-full pl-3">
                 <ConfigProvider theme={theme}>
                     <Menu items={items} className="h-full pr-3" selectedKeys={[location.pathname]} onClick={handleClick} />
                 </ConfigProvider>

@@ -30,10 +30,11 @@ var (
 			g.WithImportPkgPath("github.com/golang-module/carbon/v2")
 
 			var (
-				activity = g.GenerateModel("albums")
+				albums   = g.GenerateModel("albums")
+				storages = g.GenerateModel("storages")
 			)
 
-			g.ApplyBasic(activity)
+			g.ApplyBasic(albums, storages)
 
 			g.Execute()
 		},

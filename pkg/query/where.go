@@ -24,6 +24,7 @@ func newWhere(segments []string, value any) Builder {
 }
 
 func (w *Where) Build(tx *gorm.DB) *gorm.DB {
+
 	return tx.Clauses(clause.Eq{
 		Column: w.field,
 		Value:  w.value,

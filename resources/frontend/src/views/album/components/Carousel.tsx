@@ -1,94 +1,13 @@
-import { createSignal, For, onMount, useContext } from 'solid-js';
+import { createMemo, createSignal, For, onMount, useContext } from 'solid-js';
 import { CursorContext } from '@/layouts/context/cursor';
 import RouterAnimation from '@/components/RouterAnimation';
 import { scroll } from 'motion';
 import { Motion } from 'solid-motionone';
 import ProgressBar from '@/components/ProgressBar';
 
-export default function Carousel() {
-    const [items, setItems] = createSignal([
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-    ]);
+const images = import.meta.glob('../../../assets/images/baby/*', { eager: true });
 
+export default function Carousel() {
     const { setActive, setInactive } = useContext(CursorContext);
 
     let container: HTMLDivElement | undefined = undefined;
@@ -96,6 +15,11 @@ export default function Carousel() {
     const [percent, setPercent] = createSignal(0);
     onMount(() => {
         scroll(({ x }) => setPercent(x.progress), { container, axis: 'x' });
+    });
+
+    const items = createMemo(() => {
+        // @ts-ignore
+        return Object.values(images).map(image => image.default);
     });
 
     return (
@@ -122,7 +46,7 @@ export default function Carousel() {
                                     onMouseLeave={setInactive}
                                 >
                                     <div
-                                        style={{ 'background-image': `url(${item.src})` }}
+                                        style={{ 'background-image': `url(${item})` }}
                                         class="group-hover:scale-105 h-full w-96 transition-all duration-500 bg-no-repeat bg-contain bg-center"
                                     />
                                 </div>

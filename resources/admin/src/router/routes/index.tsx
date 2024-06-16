@@ -19,8 +19,13 @@ const routes: RouteObject[] = [
                         errorElement: <ErrorComponent />,
                         children: handleModuleRoutes(modules),
                     },
+                    {
+                        path: "*",
+                        element: <ErrorComponent />,
+                    },
                 ],
             },
+
         ],
     },
 ]

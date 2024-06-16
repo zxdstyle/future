@@ -1,5 +1,5 @@
 import { createMasonry } from '@solid-primitives/masonry';
-import { createSignal, useContext } from 'solid-js';
+import { createMemo, createSignal, useContext } from 'solid-js';
 import { createBreakpoints } from '@solid-primitives/media';
 import { createElementSize } from '@solid-primitives/resize-observer';
 import { CursorContext } from '@/layouts/context/cursor';
@@ -10,50 +10,13 @@ interface Props {
     images?: string[];
 }
 
+const images = import.meta.glob('../../../assets/images/baby/*', { eager: true });
 const getRandomHeight = () => Math.floor(Math.random() * 300) + 100;
 export default function Masonry(props: Props) {
-    const [items, setItems] = createSignal([
-        {
-            src: 'https://images.pexels.com/photos/20216289/pexels-photo-20216289.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            width: 467,
-            height: 621,
-        },
-        {
-            src: 'https://images.pexels.com/photos/22609359/pexels-photo-22609359.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-            width: 466,
-            height: 312,
-        },
-        {
-            src: 'https://images.pexels.com/photos/22601821/pexels-photo-22601821.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-            width: 466,
-            height: 312,
-        },
-        {
-            src: 'https://images.pexels.com/photos/22662125/pexels-photo-22662125.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-            width: 466,
-            height: 583,
-        },
-        {
-            src: 'https://images.pexels.com/photos/22643799/pexels-photo-22643799.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-            width: 466,
-            height: 312,
-        },
-        {
-            src: 'https://images.pexels.com/photos/22643799/pexels-photo-22643799.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-            width: 466,
-            height: 312,
-        },
-        {
-            src: 'https://images.pexels.com/photos/22643799/pexels-photo-22643799.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-            width: 466,
-            height: 312,
-        },
-        {
-            src: 'https://images.pexels.com/photos/22643799/pexels-photo-22643799.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-            width: 466,
-            height: 312,
-        },
-    ]);
+    const items = createMemo(() => {
+        // @ts-ignore
+        return Object.values(images).map(image => image.default);
+    });
 
     const br = createBreakpoints({
         sm: '640px',
@@ -85,7 +48,7 @@ export default function Masonry(props: Props) {
                     onMouseOver={setActive}
                     onMouseLeave={setInactive}
                 >
-                    <img class="group-hover:scale-105 transition-all duration-500" src={item.source.src} alt="" />
+                    <img class="group-hover:scale-105 transition-all duration-500" src={item.source} alt="" />
                 </div>
             );
         },
