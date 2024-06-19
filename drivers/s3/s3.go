@@ -1,12 +1,13 @@
 package s3
 
 import (
-	"future-admin/internal/logic/driver"
+	"future-admin/internal/logic"
+	"future-admin/internal/logic/drivers"
 	"future-admin/internal/model"
 )
 
 func init() {
-	driver.Register(func() model.IDriver {
+	logic.Invoke[*drivers.Logic]().Register(func() model.IDriver {
 		return &S3{
 			config: model.DriverConfig{
 				Slug: "s3",

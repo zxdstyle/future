@@ -1,6 +1,7 @@
-package driver
+package drivers
 
 import (
+	"errors"
 	"future-admin/internal/model"
 	"future-admin/pkg/utils/co"
 	"reflect"
@@ -8,16 +9,18 @@ import (
 )
 
 var (
-	drivers    = co.NewMap[string, model.IDriver]()
+	drivers    = co.NewMap[string, Constructor]()
 	driverInfo = co.NewMap[string, model.DriverInfo]()
+
+	ErrNotFoundDriver = errors.New("not found drivers")
 )
 
 type Constructor func() model.IDriver
 
-func Register(constructor Constructor) {
+func (*Logic) Register(constructor Constructor) {
 	driver := constructor()
 	cfg := driver.Config()
-	drivers.Set(cfg.Slug, driver)
+	drivers.Set(cfg.Slug, constructor)
 
 	t := reflect.TypeOf(driver.GetAddition())
 	driverInfo.Set(cfg.Slug, model.DriverInfo{
@@ -25,6 +28,15 @@ func Register(constructor Constructor) {
 		Slug:      cfg.Slug,
 		Additions: getAdditionalItems(t),
 	})
+}
+
+func (*Logic) GetDriver(slug string) (model.IDriver, error) {
+	constructor, ok := drivers.Get(slug)
+	if !ok {
+		return nil, ErrNotFoundDriver
+	}
+
+	return constructor(), nil
 }
 
 func getAdditionalItems(t reflect.Type) []model.DriverAdditionItem {

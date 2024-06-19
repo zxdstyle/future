@@ -1,6 +1,7 @@
 package s3
 
 import (
+	"encoding/json"
 	"fmt"
 	"future-admin/internal/model"
 	"github.com/aws/aws-sdk-go/aws"
@@ -16,7 +17,11 @@ type S3 struct {
 	config  model.DriverConfig
 }
 
-func (d *S3) Init() error {
+func (d *S3) Init(addition string) error {
+	if err := json.Unmarshal([]byte(addition), &d.Addition); err != nil {
+		return err
+	}
+
 	if err := d.doInitSession(); err != nil {
 		return err
 	}

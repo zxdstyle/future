@@ -13,7 +13,7 @@ type (
 		Placeholder              string `json:"placeholder"`
 		ForcePathStyle           bool   `json:"force_path_style"`
 		ListObjectVersion        string `json:"list_object_version" type:"select" options:"v1,v2" default:"v1"`
-		RemoveBucket             bool   `json:"remove_bucket" help:"Remove bucket name from path when using custom host."`
+		RemoveBucket             bool   `json:"remove_bucket" help:"remove_bucket_tips"`
 		AddFilenameToDisposition bool   `json:"add_filename_to_disposition" help:"Add filename to Content-Disposition header."`
 	}
 )

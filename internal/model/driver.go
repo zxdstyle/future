@@ -4,6 +4,7 @@ type (
 	IDriver interface {
 		List() error
 		Config() DriverConfig
+		Init(addition string) error
 		GetAddition() any
 	}
 
