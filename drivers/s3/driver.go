@@ -52,22 +52,23 @@ func (d *S3) Config() model.DriverConfig {
 
 func (d *S3) List() error {
 	var (
-		continuationToken *string
-		startAfter        *string
-		prefix            = "/"
+		//continuationToken *string
+		//startAfter        *string
+		prefix = "/"
 	)
 
-	input := &s3.ListObjectsV2Input{
-		Bucket:            &d.Bucket,
-		ContinuationToken: continuationToken,
-		Prefix:            &prefix,
-		Delimiter:         aws.String("/"),
-		StartAfter:        startAfter,
+	input := &s3.ListObjectsInput{
+		Bucket: &d.Bucket,
+		//ContinuationToken: continuationToken,
+		Prefix:    &prefix,
+		Delimiter: aws.String("/"),
+		//StartAfter:        startAfter,
 	}
-	listObjectsResult, err := d.client.ListObjectsV2(input)
+	listObjectsResult, err := d.client.ListObjects(input)
 	if err != nil {
 		return err
 	}
+	d.client.GetBucketLocation()
 	fmt.Println(listObjectsResult)
 	return nil
 }

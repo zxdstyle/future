@@ -19,7 +19,8 @@ func RegisterRoute(srv *server.Server) {
 
 	srv.GET("/api/v1/storages", handler.Storage.List)
 	srv.POST("/api/v1/storages", handler.Storage.Create)
-	srv.POST("/api/v1/storages/:id", handler.Storage.Update)
+	srv.GET("/api/v1/storages/:id", handler.Storage.Show)
+	srv.PUT("/api/v1/storages/:id", handler.Storage.Update)
 	srv.POST("/api/v1/storages", handler.Storage.Create)
 	srv.DELETE("/api/v1/storages/:id", handler.Storage.Destroy)
 }

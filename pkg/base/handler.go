@@ -4,6 +4,7 @@ import (
 	"context"
 	"future-admin/pkg/server/requests"
 	"future-admin/pkg/server/responses"
+	"github.com/spf13/cast"
 )
 
 type Handler[M any] struct {
@@ -34,11 +35,24 @@ func (h *Handler[M]) Create(ctx context.Context, req *requests.RequestAble) (res
 }
 
 func (h *Handler[M]) Update(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {
-	return nil, nil
+	var m M
+	if err := req.BodyParser(&m); err != nil {
+		return nil, err
+	}
+	id := req.Params("id")
+
+	if e := h.logic.Update(ctx, cast.ToUint64(id), &m); e != nil {
+		return nil, e
+	}
+
+	mo, err := h.logic.Show(ctx, cast.ToUint64(id))
+	return responses.Success(mo), err
 }
 
 func (h *Handler[M]) Show(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {
-	return nil, nil
+	id := req.Params("id")
+	m, e := h.logic.Show(ctx, cast.ToUint64(id))
+	return responses.Success(m), e
 }
 
 func (h *Handler[M]) Destroy(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {

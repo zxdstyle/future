@@ -38,6 +38,9 @@ func (q *Query) ParseFromReq(req *requests.RequestAble) (*Query, error) {
 
 	for key, value := range queries {
 		s := strings.Split(key, ".")
+		if len(s) < 2 {
+			continue
+		}
 		switch s[0] {
 		case whereSlug:
 			if opt, ok := filters[s[1]]; ok {
