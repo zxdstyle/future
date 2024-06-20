@@ -15,6 +15,6 @@ func newInstance(storage *model.Storage, driver model.IDriver) (*Instance, error
 	}, nil
 }
 
-func (i *Instance) GetList() error {
-	return i.driver.List()
+func (i *Instance) GetList(dir string) ([]*model.Object, error) {
+	return i.driver.List(dir)
 }

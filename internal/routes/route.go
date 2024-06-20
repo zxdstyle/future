@@ -6,16 +6,19 @@ import (
 )
 
 func RegisterRoute(srv *server.Server) {
+
+	srv.GET("/api/v1/drivers", handler.Driver.List)
+
 	srv.GET("/api/v1/fs", handler.Fs.List)
 	srv.GET("/api/v1/fs/:path", handler.Fs.Detail)
 	srv.GET("/api/v1/fs/:file/preview", handler.Fs.Preview)
 
 	srv.GET("/api/v1/albums", handler.Album.List)
 	srv.POST("/api/v1/albums", handler.Album.Create)
-	srv.POST("/api/v1/albums/:album", handler.Album.Update)
+	srv.GET("/api/v1/albums/:id", handler.Album.Show)
+	srv.PUT("/api/v1/albums/:album", handler.Album.Update)
 	srv.POST("/api/v1/albums", handler.Album.Create)
-
-	srv.GET("/api/v1/drivers", handler.Driver.List)
+	srv.DELETE("/api/v1/albums/:id", handler.Album.Destroy)
 
 	srv.GET("/api/v1/storages", handler.Storage.List)
 	srv.POST("/api/v1/storages", handler.Storage.Create)

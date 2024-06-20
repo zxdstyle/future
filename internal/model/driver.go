@@ -2,7 +2,7 @@ package model
 
 type (
 	IDriver interface {
-		List() error
+		List(dir string) ([]*Object, error)
 		Config() DriverConfig
 		Init(addition string) error
 		GetAddition() any

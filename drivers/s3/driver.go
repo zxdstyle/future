@@ -2,12 +2,13 @@ package s3
 
 import (
 	"encoding/json"
-	"fmt"
 	"future-admin/internal/model"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"path"
+	"strings"
 )
 
 type S3 struct {
@@ -50,27 +51,55 @@ func (d *S3) Config() model.DriverConfig {
 	return d.config
 }
 
-func (d *S3) List() error {
+func getKey(path string, dir bool) string {
+	path = strings.TrimPrefix(path, "/")
+	if path != "" && dir {
+		path += "/"
+	}
+	return path
+}
+func (d *S3) List(dir string) ([]*model.Object, error) {
 	var (
-		//continuationToken *string
-		//startAfter        *string
-		prefix = "/"
+		marker string
+		prefix = getKey(dir, true)
+		input  = &s3.ListObjectsInput{
+			Bucket: &d.Bucket,
+			Marker: &marker,
+			//ContinuationToken: continuationToken,
+			Prefix:    &prefix,
+			Delimiter: aws.String("/"),
+			//StartAfter:        startAfter,
+		}
+
+		files = make([]*model.Object, 0)
 	)
 
-	input := &s3.ListObjectsInput{
-		Bucket: &d.Bucket,
-		//ContinuationToken: continuationToken,
-		Prefix:    &prefix,
-		Delimiter: aws.String("/"),
-		//StartAfter:        startAfter,
-	}
 	listObjectsResult, err := d.client.ListObjects(input)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	d.client.GetBucketLocation()
-	fmt.Println(listObjectsResult)
-	return nil
+	for _, object := range listObjectsResult.CommonPrefixes {
+		name := path.Base(strings.Trim(*object.Prefix, "/"))
+		file := model.Object{
+			//Id:        *object.Key,
+			Name:     name,
+			IsFolder: true,
+		}
+		files = append(files, &file)
+	}
+
+	for _, object := range listObjectsResult.Contents {
+		name := path.Base(*object.Key)
+		file := model.Object{
+			//Id:        *object.Key,
+			Name:     name,
+			Size:     *object.Size,
+			Modified: *object.LastModified,
+		}
+		files = append(files, &file)
+	}
+
+	return files, nil
 }
 
 func (d *S3) GetAddition() any {

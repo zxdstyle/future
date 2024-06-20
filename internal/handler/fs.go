@@ -40,7 +40,11 @@ func (s *fsHandler) List(ctx context.Context, r *requests.RequestAble) (response
 		return nil, err
 	}
 
-	return nil, instance.GetList()
+	data, err := instance.GetList(req.Path)
+	if err != nil {
+		return nil, err
+	}
+	return responses.Success(data), nil
 }
 
 func (s *fsHandler) Detail(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {
