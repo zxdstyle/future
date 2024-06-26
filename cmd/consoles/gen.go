@@ -34,9 +34,10 @@ var (
 				storages = g.GenerateModel("storages",
 					gen.FieldType("addition", "string"),
 				)
+				images = g.GenerateModel("images")
 			)
 
-			g.ApplyBasic(albums, storages)
+			g.ApplyBasic(albums, storages, images)
 
 			g.Execute()
 		},

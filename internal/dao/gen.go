@@ -18,12 +18,14 @@ import (
 var (
 	Q       = new(Query)
 	Album   *album
+	Image   *image
 	Storage *storage
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Album = &Q.Album
+	Image = &Q.Image
 	Storage = &Q.Storage
 }
 
@@ -31,6 +33,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:      db,
 		Album:   newAlbum(db, opts...),
+		Image:   newImage(db, opts...),
 		Storage: newStorage(db, opts...),
 	}
 }
@@ -39,6 +42,7 @@ type Query struct {
 	db *gorm.DB
 
 	Album   album
+	Image   image
 	Storage storage
 }
 
@@ -48,6 +52,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:      db,
 		Album:   q.Album.clone(db),
+		Image:   q.Image.clone(db),
 		Storage: q.Storage.clone(db),
 	}
 }
@@ -64,18 +69,21 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:      db,
 		Album:   q.Album.replaceDB(db),
+		Image:   q.Image.replaceDB(db),
 		Storage: q.Storage.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
 	Album   IAlbumDo
+	Image   IImageDo
 	Storage IStorageDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
 		Album:   q.Album.WithContext(ctx),
+		Image:   q.Image.WithContext(ctx),
 		Storage: q.Storage.WithContext(ctx),
 	}
 }
