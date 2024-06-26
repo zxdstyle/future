@@ -3,12 +3,12 @@ package server
 import (
 	"context"
 	"embed"
+	"encoding/json"
 	"fmt"
 	"future-admin/pkg/env"
 	"future-admin/pkg/log"
 	"future-admin/pkg/server/handler"
 	"future-admin/pkg/utils"
-	json "github.com/bytedance/sonic"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
