@@ -4,14 +4,22 @@ import (
 	"context"
 	"fmt"
 	"future-admin/internal/dao"
+	"future-admin/internal/logic"
+	"future-admin/internal/logic/images"
 	"future-admin/internal/model"
+	"future-admin/pkg/base"
 	"future-admin/pkg/server/requests"
 	"future-admin/pkg/server/responses"
 )
 
-var Image = &imageHandler{}
+var Image = &imageHandler{
+	Handler: base.NewHandler[model.Image](
+		logic.Invoke[*images.Logic]().Logic,
+	),
+}
 
 type imageHandler struct {
+	*base.Handler[model.Image]
 }
 
 func (h *imageHandler) Create(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {
