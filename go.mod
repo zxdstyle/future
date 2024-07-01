@@ -5,6 +5,7 @@ go 1.22
 require (
 	github.com/aws/aws-sdk-go v1.54.2
 	github.com/davidbyttow/govips/v2 v2.14.0
+	github.com/djherbis/times v1.6.0
 	github.com/dsoprea/go-exif/v3 v3.0.1
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
