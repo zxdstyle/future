@@ -1,11 +1,16 @@
 package model
 
+import "context"
+
 type (
 	IDriver interface {
 		List(dir string) ([]*Object, error)
 		Config() DriverConfig
 		Init(addition string) error
 		GetAddition() any
+		Read(file string) ([]byte, error)
+		Walk(ctx context.Context, dir string, handler func(obj *Object) error) error
+		Put(ctx context.Context, file *FileData) error
 	}
 
 	DriverConfig struct {

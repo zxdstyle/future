@@ -1,12 +1,11 @@
 package responses
 
 import (
-	"bytes"
 	"github.com/gofiber/fiber/v2"
 	"net/http"
 )
 
-func Bytes(data bytes.Buffer) Response {
+func Bytes(data []byte) Response {
 	return &bytesResponse{
 		status: http.StatusOK,
 		data:   data,
@@ -15,7 +14,7 @@ func Bytes(data bytes.Buffer) Response {
 
 type bytesResponse struct {
 	status int
-	data   bytes.Buffer
+	data   []byte
 }
 
 func (v *bytesResponse) StatusCode() int {
@@ -27,6 +26,6 @@ func (v *bytesResponse) SetStatusCode(i int) {
 }
 
 func (v *bytesResponse) Respond(ctx *fiber.Ctx) error {
-	_, err := ctx.Write(v.data.Bytes())
+	_, err := ctx.Write(v.data)
 	return err
 }

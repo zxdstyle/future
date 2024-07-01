@@ -1,7 +1,9 @@
 package handler
 
 import (
+	"bufio"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"future-admin/internal/logic"
@@ -40,11 +42,33 @@ func (s *fsHandler) List(ctx context.Context, r *requests.RequestAble) (response
 		return nil, err
 	}
 
-	data, err := instance.GetList(req.Path)
-	if err != nil {
-		return nil, err
-	}
-	return responses.Success(data), nil
+	r.Set("Content-Type", "text/event-stream")
+	r.Set("Cache-Control", "no-cache")
+	r.Set("Connection", "keep-alive")
+	r.Set("Transfer-Encoding", "chunked")
+	r.Status(fiber.StatusOK).Context().SetBodyStreamWriter(func(w *bufio.Writer) {
+		err = instance.Walk(context.Background(), req.Path, func(obj *model.Object) error {
+			data, err := json.Marshal(obj)
+			if err != nil {
+				log.Error(err)
+				return err
+			}
+
+			if _, err := fmt.Fprintf(w, "data: %s\n\n", string(data)); err != nil {
+				log.Error(err)
+				return err
+			}
+
+			return w.Flush()
+		})
+		if err != nil {
+			log.Error(err.Error())
+		}
+		log.Error("ended")
+		select {}
+	})
+
+	return nil, nil
 }
 
 func (s *fsHandler) Detail(ctx context.Context, req *requests.RequestAble) (responses.Response, error) {
@@ -94,7 +118,7 @@ func (s *fsHandler) Preview(ctx context.Context, req *requests.RequestAble) (res
 	if err != nil {
 		return nil, err
 	}
-	return responses.Bytes(bytes), nil
+	return responses.Bytes(bytes.Bytes()), nil
 }
 
 func (*fsHandler) fsFileInfoToFileDescription(parent string, info fs.FileInfo) model.FileDescription {
@@ -115,4 +139,28 @@ func (*fsHandler) fsFileInfoToFileDescription(parent string, info fs.FileInfo) m
 		AccessedAt: accessAt,
 		UpdatedAt:  updatedAt,
 	}
+}
+
+func (s *fsHandler) Thumbnail(ctx context.Context, r *requests.RequestAble) (responses.Response, error) {
+	var req ListReq
+	if err := r.QueryParser(&req); err != nil {
+		return nil, err
+	}
+
+	instance, err := logic.Invoke[*storages.Logic]().Instance(ctx, req.StorageId)
+	if err != nil {
+		return nil, err
+	}
+
+	thumbnail, err := instance.Thumbnail(req.Path)
+	if err != nil {
+		return nil, err
+	}
+
+	if thumbnail.Headers != nil {
+		for key, value := range thumbnail.Headers {
+			r.Response().Header.Set(key, value)
+		}
+	}
+	return responses.Bytes(thumbnail.Data), nil
 }

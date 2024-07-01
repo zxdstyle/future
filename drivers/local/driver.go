@@ -3,10 +3,12 @@ package local
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"future-admin/internal/constants/errs"
 	"future-admin/internal/model"
-	"github.com/davidbyttow/govips/v2/vips"
+	"future-admin/pkg/log"
 	"github.com/djherbis/times"
+	"io"
 	"io/fs"
 	"os"
 	"path"
@@ -37,7 +39,7 @@ func (d *Local) GetAddition() any {
 }
 
 func (d *Local) List(dir string) ([]*model.Object, error) {
-	rawFiles, err := readDir(dir)
+	rawFiles, err := readDir(path.Join(d.Path, dir))
 	if err != nil {
 		return nil, err
 	}
@@ -89,6 +91,7 @@ func (d *Local) FileInfoToObj(f fs.FileInfo, fullPath string) *model.Object {
 	//		Thumbnail: thumb,
 	//	},
 	//}
+
 	return &model.Object{
 		ID:       "",
 		Path:     filepath.Join(fullPath, f.Name()),
@@ -131,7 +134,76 @@ func (d *Local) Get(ctx context.Context, path string) (*model.Object, error) {
 	return &file, nil
 }
 
-func (d *Local) Thumbnail() {
-	img, _ := vips.NewImageFromFile()
-	img.Thumbnail()
+func (d *Local) Walk(ctx context.Context, dir string, handler func(obj *model.Object) error) error {
+	fullPath := path.Join(d.Path, dir)
+
+	fs, err := os.Open(fullPath)
+	if err != nil {
+		return err
+	}
+	defer fs.Close()
+
+	info, err := fs.Stat()
+	if err != nil {
+		return err
+	}
+	if !info.IsDir() {
+		if !d.ShowHidden && strings.HasPrefix(info.Name(), ".") {
+			return nil
+		}
+		obj := d.FileInfoToObj(info, dir)
+		return handler(obj)
+	}
+
+	for {
+		files, err := fs.ReadDir(30)
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+
+		for _, file := range files {
+			info, err := file.Info()
+			if err != nil {
+				return err
+			}
+
+			if !d.ShowHidden && strings.HasPrefix(info.Name(), ".") {
+				continue
+			}
+			log.Info(info.Name())
+			obj := d.FileInfoToObj(info, dir)
+			if err := handler(obj); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func (d *Local) Read(file string) ([]byte, error) {
+	return os.ReadFile(path.Join(d.Path, file))
+}
+
+func (d *Local) Put(ctx context.Context, file *model.FileData) error {
+	fullPath := path.Join(d.Path, file.Name)
+	out, err := os.Create(fullPath)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = out.Close()
+		if errors.Is(err, context.Canceled) {
+			_ = os.Remove(fullPath)
+		}
+	}()
+
+	if _, err = out.Write(file.Data); err != nil {
+		return err
+	}
+
+	return nil
 }

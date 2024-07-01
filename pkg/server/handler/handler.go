@@ -16,6 +16,9 @@ func WrapHandler(handlers ...Handler) (res []fiber.Handler) {
 			if err != nil {
 				return err
 			}
+			if resp == nil {
+				return nil
+			}
 			ctx = ctx.Status(resp.StatusCode())
 
 			return resp.Respond(ctx)

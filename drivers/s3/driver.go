@@ -1,6 +1,7 @@
 package s3
 
 import (
+	"context"
 	"encoding/json"
 	"future-admin/internal/model"
 	"github.com/aws/aws-sdk-go/aws"
@@ -51,6 +52,10 @@ func (d *S3) Config() model.DriverConfig {
 	return d.config
 }
 
+func (d *S3) Read(filename string) ([]byte, error) {
+	return nil, nil
+}
+
 func getKey(path string, dir bool) string {
 	path = strings.TrimPrefix(path, "/")
 	if path != "" && dir {
@@ -58,6 +63,7 @@ func getKey(path string, dir bool) string {
 	}
 	return path
 }
+
 func (d *S3) List(dir string) ([]*model.Object, error) {
 	var (
 		marker string
@@ -104,4 +110,11 @@ func (d *S3) List(dir string) ([]*model.Object, error) {
 
 func (d *S3) GetAddition() any {
 	return d.Addition
+}
+
+func (d *S3) Walk(ctx context.Context, dir string, handler func(obj *model.Object) error) error {
+	return nil
+}
+func (d *S3) Put(ctx context.Context, file *model.FileData) error {
+	return nil
 }
