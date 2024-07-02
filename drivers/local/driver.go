@@ -6,7 +6,6 @@ import (
 	"errors"
 	"future-admin/internal/constants/errs"
 	"future-admin/internal/model"
-	"future-admin/pkg/log"
 	"github.com/djherbis/times"
 	"io"
 	"io/fs"
@@ -55,16 +54,6 @@ func (d *Local) List(dir string) ([]*model.Object, error) {
 }
 
 func (d *Local) FileInfoToObj(f fs.FileInfo, fullPath string) *model.Object {
-	//thumb := ""
-	//if d.Thumbnail {
-	//	typeName := utils.GetFileType(f.Name())
-	//	if typeName == conf.IMAGE || typeName == conf.VIDEO {
-	//		thumb = common.GetApiUrl(nil) + stdpath.Join("/d", reqPath, f.Name())
-	//		thumb = utils.EncodePath(thumb, true)
-	//		thumb += "?type=thumb&sign=" + sign.Sign(stdpath.Join(reqPath, f.Name()))
-	//	}
-	//}
-
 	isFolder := f.IsDir() || isSymlinkDir(f, fullPath)
 	var size int64
 	if !isFolder {
@@ -77,21 +66,6 @@ func (d *Local) FileInfoToObj(f fs.FileInfo, fullPath string) *model.Object {
 			ctime = t.BirthTime()
 		}
 	}
-
-	//file := model.ObjThumb{
-	//	Object: model.Object{
-	//		Path:     filepath.Join(fullPath, f.Name()),
-	//		Name:     f.Name(),
-	//		Modified: f.ModTime(),
-	//		Size:     size,
-	//		IsFolder: isFolder,
-	//		Ctime:    ctime,
-	//	},
-	//	Thumbnail: model.Thumbnail{
-	//		Thumbnail: thumb,
-	//	},
-	//}
-
 	return &model.Object{
 		ID:       "",
 		Path:     filepath.Join(fullPath, f.Name()),
@@ -173,7 +147,6 @@ func (d *Local) Walk(ctx context.Context, dir string, handler func(obj *model.Ob
 			if !d.ShowHidden && strings.HasPrefix(info.Name(), ".") {
 				continue
 			}
-			log.Info(info.Name())
 			obj := d.FileInfoToObj(info, dir)
 			if err := handler(obj); err != nil {
 				return err
@@ -189,7 +162,16 @@ func (d *Local) Read(file string) ([]byte, error) {
 }
 
 func (d *Local) Put(ctx context.Context, file *model.FileData) error {
-	fullPath := path.Join(d.Path, file.Name)
+
+	var (
+		fullPath = path.Join(d.Path, file.Name)
+		dir      = filepath.Dir(fullPath)
+	)
+
+	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+		return err
+	}
+
 	out, err := os.Create(fullPath)
 	if err != nil {
 		return err
@@ -206,4 +188,8 @@ func (d *Local) Put(ctx context.Context, file *model.FileData) error {
 	}
 
 	return nil
+}
+
+func (d *Local) Link(ctx context.Context, file *model.FileData) {
+
 }

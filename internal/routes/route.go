@@ -9,7 +9,7 @@ func RegisterRoute(srv *server.Server) {
 
 	srv.GET("/api/v1/drivers", handler.Driver.List)
 
-	srv.GET("/fs/thumbnail", handler.Fs.Thumbnail)
+	srv.GET("/fs/image", handler.Fs.Image)
 
 	srv.GET("/api/v1/fs", handler.Fs.List)
 	srv.GET("/api/v1/fs/:path", handler.Fs.Detail)
