@@ -1,0 +1,13 @@
+host: 0.0.0.0
+port: 8081
+name: future
+log:
+  level: info
+  stats: true
+pprof:
+  enable: false
+  prefix:
+databases:
+  default:
+    driver: "mysql"
+    dsn: "root:a8968640@tcp(127.0.0.1:3306)/future?charset=utf8mb4&parseTime=True&loc=Local"

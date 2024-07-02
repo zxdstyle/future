@@ -20,7 +20,7 @@ require (
 	github.com/spf13/viper v1.18.2
 	github.com/toolkits/net v0.0.0-20160910085801-3f39ab6fe3ce
 	go.uber.org/zap v1.27.0
-	golang.org/x/sync v0.6.0
+	golang.org/x/sync v0.7.0
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gen v0.3.26
 	gorm.io/gorm v1.25.10
@@ -52,6 +52,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/panjf2000/ants/v2 v2.10.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect

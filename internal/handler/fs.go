@@ -142,7 +142,7 @@ func (*fsHandler) fsFileInfoToFileDescription(parent string, info fs.FileInfo) m
 	}
 }
 
-func (s *fsHandler) Thumbnail(ctx context.Context, r *requests.RequestAble) (responses.Response, error) {
+func (s *fsHandler) Image(ctx context.Context, r *requests.RequestAble) (responses.Response, error) {
 	var req ListReq
 	if err := r.QueryParser(&req); err != nil {
 		return nil, err
@@ -153,15 +153,10 @@ func (s *fsHandler) Thumbnail(ctx context.Context, r *requests.RequestAble) (res
 		return nil, err
 	}
 
-	thumbnail, err := instance.Thumbnail(req.Path)
+	data, err := instance.Read(ctx, req.Path)
 	if err != nil {
 		return nil, err
 	}
 
-	if thumbnail.Headers != nil {
-		for key, value := range thumbnail.Headers {
-			r.Response().Header.Set(key, value)
-		}
-	}
-	return responses.Bytes(thumbnail.Data), nil
+	return responses.Bytes(data), nil
 }
