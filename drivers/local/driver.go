@@ -163,7 +163,6 @@ func (d *Local) Read(file string) ([]byte, error) {
 }
 
 func (d *Local) Put(ctx context.Context, file *model.FileData) error {
-
 	var (
 		fullPath = path.Join(d.Path, file.Name)
 		dir      = filepath.Dir(fullPath)

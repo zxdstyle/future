@@ -55,6 +55,10 @@ func (s *fsHandler) List(ctx context.Context, r *requests.RequestAble) (response
 				return err
 			}
 
+			if _, err := fmt.Fprintf(w, "id: %s\n\n", obj.Name); err != nil {
+				log.Error(err)
+				return err
+			}
 			if _, err := fmt.Fprintf(w, "data: %s\n\n", string(data)); err != nil {
 				log.Error(err)
 				return err

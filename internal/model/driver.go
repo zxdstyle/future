@@ -14,8 +14,9 @@ type (
 	}
 
 	DriverConfig struct {
-		Name string
-		Slug string
+		Name     string
+		Slug     string
+		PageSize int
 	}
 
 	DriverInfo struct {
