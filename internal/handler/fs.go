@@ -48,6 +48,7 @@ func (s *fsHandler) List(ctx context.Context, r *requests.RequestAble) (response
 	r.Set("Transfer-Encoding", "chunked")
 	r.Status(fiber.StatusOK).Context().SetBodyStreamWriter(func(w *bufio.Writer) {
 		err = instance.Walk(context.Background(), req.Path, func(obj *model.Object) error {
+			log.Info(obj.Path)
 			data, err := json.Marshal(obj)
 			if err != nil {
 				log.Error(err)
@@ -64,7 +65,7 @@ func (s *fsHandler) List(ctx context.Context, r *requests.RequestAble) (response
 		if err != nil {
 			log.Error(err.Error())
 		}
-		log.Error("ended")
+		log.Info("ended")
 		select {}
 	})
 

@@ -6,7 +6,6 @@ import (
 	"errors"
 	"future-admin/internal/constants/errs"
 	"future-admin/internal/model"
-	"future-admin/pkg/log"
 	"github.com/djherbis/times"
 	"io"
 	"io/fs"
@@ -173,7 +172,7 @@ func (d *Local) Walk(ctx context.Context, dir string, handler func(obj *model.Ob
 			if !d.ShowHidden && strings.HasPrefix(info.Name(), ".") {
 				continue
 			}
-			log.Info(info.Name())
+
 			obj := d.FileInfoToObj(info, dir)
 			if err := handler(obj); err != nil {
 				return err
