@@ -1,0 +1,3 @@
+interface IAdmin {
+    name: string
+}
